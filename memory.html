@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
-<title>Our Memory 💕</title>
+<title>Our Memory 💖</title>
 
 <style>
 body{
@@ -10,96 +10,153 @@ body{
   font-family:sans-serif;
   background:#0f172a;
   color:white;
-  text-align:center;
-  overflow:hidden;
 }
 
+/* ☰ เมนู */
+.menu-btn{
+  position:fixed;
+  top:10px;
+  left:10px;
+  font-size:25px;
+  cursor:pointer;
+}
+
+.sidebar{
+  position:fixed;
+  top:0;
+  left:-250px;
+  width:250px;
+  height:100%;
+  background:#1e293b;
+  padding:20px;
+  transition:0.3s;
+}
+
+.sidebar a{
+  display:block;
+  margin:15px 0;
+  color:white;
+  text-decoration:none;
+}
+
+/* กล่อง */
 .box{
   margin:80px auto;
   width:320px;
   padding:20px;
   border-radius:20px;
+  text-align:center;
   background:linear-gradient(135deg,#22c1c3,#ff4d6d);
 }
 
+/* ขูดการ์ด */
+canvas{
+  background:#ccc;
+  border-radius:10px;
+}
+
 button{
-  padding:10px 20px;
+  padding:10px;
   border:none;
   border-radius:10px;
   background:#22c55e;
   color:white;
-  cursor:pointer;
-}
-
-img{
-  width:200px;
-  border-radius:15px;
-}
-
-.heart{
-  position:fixed;
-  top:-10px;
-  animation:fall linear infinite;
-}
-
-@keyframes fall{
-  to{transform:translateY(100vh);}
 }
 </style>
 </head>
 
 <body>
 
-<div class="box">
-  <h2>💖 ความทรงจำของเรา 💖</h2>
+<!-- ☰ -->
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
 
-  <p>เราเจอกันครั้งแรก:</p>
-  <p>25 มกราคม 2026</p>
+<div class="sidebar" id="menu">
+  <a href="#" onclick="showPage('home')">💖 วันคบรอบ</a>
+  <a href="#" onclick="showPage('photo')">📸 รูปภาพ</a>
+  <a href="#" onclick="showPage('video')">🎬 วิดีโอ</a>
+  <a href="#" onclick="showPage('secret')">💌 ข้อความลับ</a>
+</div>
 
-  <p>คบกันมาแล้ว:</p>
-  <p id="days"></p>
+<!-- หน้า 1 -->
+<div class="box" id="home">
+  <h2>💖 วันคบรอบ 💖</h2>
+  <p id="time"></p>
+</div>
 
-  <img src="https://i.imgur.com/yourimage.jpg">
+<!-- รูป -->
+<div class="box" id="photo" style="display:none">
+  <h2>📸 รูปของเรา</h2>
+  <img src="https://i.imgur.com/yourimage.jpg" width="200">
+</div>
 
-  <br><br>
-  <button onclick="show()">กดดูข้อความลับ 💌</button>
-  <p id="msg"></p>
+<!-- วิดีโอ -->
+<div class="box" id="video" style="display:none">
+  <h2>🎬 วิดีโอ</h2>
+  <video width="250" controls>
+    <source src="yourvideo.mp4" type="video/mp4">
+  </video>
+</div>
+
+<!-- ข้อความขูด -->
+<div class="box" id="secret" style="display:none">
+  <h2>💌 ข้อความลับ</h2>
+  <p>ขูดเพื่อดู 💖</p>
+  <canvas id="scratch" width="250" height="100"></canvas>
 </div>
 
 <script>
-// กันเข้าหน้านี้ตรงๆ
-if(localStorage.getItem("login") !== "true"){
-  window.location.href = "index.html";
+// 🔥 นับเวลาเรียลไทม์
+const start = new Date("2026-01-25");
+
+function updateTime(){
+  const now = new Date();
+  let diff = now - start;
+
+  if(diff < 0){
+    document.getElementById("time").innerText = "ยังไม่ถึงวันของเรา 💖";
+    return;
+  }
+
+  let d = Math.floor(diff/1000/60/60/24);
+  let h = Math.floor(diff/1000/60/60)%24;
+  let m = Math.floor(diff/1000/60)%60;
+  let s = Math.floor(diff/1000)%60;
+
+  document.getElementById("time").innerText =
+    `${d} วัน ${h} ชม ${m} นาที ${s} วิ 💕`;
 }
 
-// นับวัน
-const startDate = new Date("2026-01-25");
-const today = new Date();
-let diff = Math.floor((today - startDate)/(1000*60*60*24));
+setInterval(updateTime,1000);
 
-if(diff < 0){
-  document.getElementById("days").innerText = "ยังไม่ถึงวันของเรา 💖";
-}else{
-  document.getElementById("days").innerText = diff + " วัน 💕";
+// ☰ เมนู
+function toggleMenu(){
+  const menu = document.getElementById("menu");
+  menu.style.left = (menu.style.left === "0px") ? "-250px" : "0px";
 }
 
-// ข้อความลับ
-function show(){
-  document.getElementById("msg").innerText = "รักเธอที่สุดในโลกเลยนะ 💖";
+// เปลี่ยนหน้า
+function showPage(page){
+  document.querySelectorAll(".box").forEach(el=>el.style.display="none");
+  document.getElementById(page).style.display="block";
 }
 
-// หัวใจตก
-function heart(){
-  const h = document.createElement("div");
-  h.innerText = "💗";
-  h.classList.add("heart");
-  h.style.left = Math.random()*100+"vw";
-  h.style.animationDuration = (Math.random()*3+2)+"s";
-  document.body.appendChild(h);
+// 🪙 ขูดการ์ด
+const canvas = document.getElementById("scratch");
+const ctx = canvas.getContext("2d");
 
-  setTimeout(()=>{h.remove();},5000);
-}
-setInterval(heart,300);
+ctx.fillStyle = "#999";
+ctx.fillRect(0,0,250,100);
+
+canvas.addEventListener("mousemove",function(e){
+  if(e.buttons === 1){
+    ctx.clearRect(e.offsetX-10,e.offsetY-10,20,20);
+  }
+});
+
+// ข้อความใต้การ์ด
+ctx.font = "16px sans-serif";
+ctx.fillStyle = "pink";
+ctx.fillText("รักเธอที่สุด 💖",60,60);
 </script>
 
 </body>
