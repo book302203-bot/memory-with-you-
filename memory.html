@@ -10,17 +10,21 @@ body{
   font-family:sans-serif;
   background:#0f172a;
   color:white;
+  text-align:center;
 }
 
-/* ☰ เมนู */
+/* ☰ ปุ่ม */
 .menu-btn{
   position:fixed;
-  top:10px;
-  left:10px;
-  font-size:25px;
+  top:15px;
+  left:15px;
+  font-size:28px;
+  color:white;
+  z-index:9999;
   cursor:pointer;
 }
 
+/* sidebar */
 .sidebar{
   position:fixed;
   top:0;
@@ -30,6 +34,7 @@ body{
   background:#1e293b;
   padding:20px;
   transition:0.3s;
+  z-index:9998;
 }
 
 .sidebar a{
@@ -45,22 +50,30 @@ body{
   width:320px;
   padding:20px;
   border-radius:20px;
-  text-align:center;
   background:linear-gradient(135deg,#22c1c3,#ff4d6d);
 }
 
-/* ขูดการ์ด */
-canvas{
-  background:#ccc;
-  border-radius:10px;
+/* รูป */
+img{
+  width:200px;
+  border-radius:15px;
 }
 
-button{
-  padding:10px;
-  border:none;
+/* หัวใจ */
+.heart{
+  position:fixed;
+  top:-10px;
+  animation:fall linear infinite;
+}
+
+@keyframes fall{
+  to{transform:translateY(100vh);}
+}
+
+/* canvas */
+canvas{
+  background:#999;
   border-radius:10px;
-  background:#22c55e;
-  color:white;
 }
 </style>
 </head>
@@ -70,6 +83,7 @@ button{
 <!-- ☰ -->
 <div class="menu-btn" onclick="toggleMenu()">☰</div>
 
+<!-- เมนู -->
 <div class="sidebar" id="menu">
   <a href="#" onclick="showPage('home')">💖 วันคบรอบ</a>
   <a href="#" onclick="showPage('photo')">📸 รูปภาพ</a>
@@ -86,7 +100,7 @@ button{
 <!-- รูป -->
 <div class="box" id="photo" style="display:none">
   <h2>📸 รูปของเรา</h2>
-  <img src="https://i.imgur.com/yourimage.jpg" width="200">
+  <img src="https://i.imgur.com/yourimage.jpg">
 </div>
 
 <!-- วิดีโอ -->
@@ -105,8 +119,13 @@ button{
 </div>
 
 <script>
-// 🔥 นับเวลาเรียลไทม์
-const start = new Date("2026-01-25");
+// 🔐 กันเข้าตรง
+if(localStorage.getItem("login") !== "true"){
+  window.location.href = "index.html";
+}
+
+// ⏱️ เวลา (ไทย)
+const start = new Date("2026-01-25T00:00:00+07:00");
 
 function updateTime(){
   const now = new Date();
@@ -117,9 +136,9 @@ function updateTime(){
     return;
   }
 
-  let d = Math.floor(diff/1000/60/60/24);
-  let h = Math.floor(diff/1000/60/60)%24;
-  let m = Math.floor(diff/1000/60)%60;
+  let d = Math.floor(diff/(1000*60*60*24));
+  let h = Math.floor(diff/(1000*60*60))%24;
+  let m = Math.floor(diff/(1000*60))%60;
   let s = Math.floor(diff/1000)%60;
 
   document.getElementById("time").innerText =
@@ -127,6 +146,7 @@ function updateTime(){
 }
 
 setInterval(updateTime,1000);
+updateTime();
 
 // ☰ เมนู
 function toggleMenu(){
@@ -138,25 +158,40 @@ function toggleMenu(){
 function showPage(page){
   document.querySelectorAll(".box").forEach(el=>el.style.display="none");
   document.getElementById(page).style.display="block";
+  toggleMenu();
 }
+
+// 💗 หัวใจตก
+function heart(){
+  const h = document.createElement("div");
+  h.innerText = "💗";
+  h.classList.add("heart");
+  h.style.left = Math.random()*100+"vw";
+  h.style.animationDuration = (Math.random()*3+2)+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),5000);
+}
+setInterval(heart,400);
 
 // 🪙 ขูดการ์ด
 const canvas = document.getElementById("scratch");
 const ctx = canvas.getContext("2d");
 
+// พื้นเทา
 ctx.fillStyle = "#999";
 ctx.fillRect(0,0,250,100);
 
+// ข้อความจริง
+ctx.font = "18px sans-serif";
+ctx.fillStyle = "pink";
+ctx.fillText("รักเธอที่สุด 💖",50,60);
+
+// ขูด
 canvas.addEventListener("mousemove",function(e){
   if(e.buttons === 1){
     ctx.clearRect(e.offsetX-10,e.offsetY-10,20,20);
   }
 });
-
-// ข้อความใต้การ์ด
-ctx.font = "16px sans-serif";
-ctx.fillStyle = "pink";
-ctx.fillText("รักเธอที่สุด 💖",60,60);
 </script>
 
 </body>
