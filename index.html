@@ -1,241 +1,52 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>Our Memory 💖</title>
-
-  <style>
-    body {
-      font-family: 'Kanit', sans-serif;
-      text-align: center;
-      background: linear-gradient(to right, #ff9a9e, #fad0c4);
-      color: white;
-      margin: 0;
-      overflow-x: hidden;
-    }
-
-    h1 {
-      margin-top: 30px;
-    }
-
-    .box {
-      background: rgba(255,255,255,0.2);
-      padding: 20px;
-      border-radius: 20px;
-      width: 320px;
-      margin: 20px auto;
-    }
-
-    img {
-      width: 200px;
-      border-radius: 20px;
-      margin-top: 10px;
-    }
-
-    button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      background: white;
-      color: #ff6b81;
-      cursor: pointer;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
-    #secret {
-      margin-top: 10px;
-      font-size: 18px;
-    }
-
-    .heart {
-      position: fixed;
-      top: -10px;
-      color: pink;
-      animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-      to {
-        transform: translateY(100vh);
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <h1>💖 ความทรงจำของเรา 💖</h1>
-
-  <div class="box">
-    <p>เราเจอกันครั้งแรก:</p>
-    <p id="date">25 มกราคม 2026</p>
-
-    <p>คบกันมาแล้ว:</p>
-    <p id="days"></p>
-
-    <!-- ใส่รูปแฟนตรงนี้ -->
-    <img src="https://i.imgur.com/yourimage.jpg" alt="our photo">
-
-    <br>
-
-    <button onclick="showMessage()">กดดูข้อความลับ 💌</button>
-    <p id="secret"></p>
-  </div>
-
-  <!-- เพลง -->
-  <audio autoplay loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
-  </audio>
-
-  <script>
-    // นับวันคบ
-    const startDate = new Date("2024-01-02");
-    const today = new Date();
-    const diff = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
-    document.getElementById("days").innerText = diff + " วัน 💕";
-
-    // ข้อความลับ
-    function showMessage() {
-      document.getElementById("secret").innerText = "รักเธอที่สุดในโลกเลยนะ 💖";
-    }
-
-    // หัวใจตก
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.innerText = "💗";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
-      document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 5000);
-    }
-
-    setInterval(createHeart, 300);
-  </script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
 <meta charset="UTF-8">
-<title>Login Love 💖</title>
+<title>Login 💖</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: sans-serif;
-}
-
 body{
   display:flex;
   justify-content:center;
   align-items:center;
-  min-height:100vh;
-  background:#0f172a;
+  height:100vh;
+  background:linear-gradient(135deg,#0f172a,#1e293b);
+  font-family:sans-serif;
 }
 
 .box{
-  position:relative;
-  width:350px;
-  height:420px;
-  background:#1e293b;
-  border-radius:20px;
-  overflow:hidden;
-}
-
-.box::before{
-  content:'';
-  position:absolute;
-  top:-50%;
-  left:-50%;
-  width:350px;
-  height:420px;
-  background:linear-gradient(0deg,transparent,#ff2770,#ff2770);
-  transform-origin:bottom right;
-  animation:animate 6s linear infinite;
-}
-
-.box::after{
-  content:'';
-  position:absolute;
-  top:-50%;
-  left:-50%;
-  width:350px;
-  height:420px;
-  background:linear-gradient(0deg,transparent,#45f3ff,#45f3ff);
-  transform-origin:bottom right;
-  animation:animate 6s linear infinite;
-  animation-delay:-3s;
-}
-
-@keyframes animate{
-  0%{transform:rotate(0deg);}
-  100%{transform:rotate(360deg);}
-}
-
-.form{
-  position:absolute;
-  inset:4px;
   background:#0f172a;
-  border-radius:16px;
   padding:40px;
-  display:flex;
-  flex-direction:column;
-  z-index:10;
-}
-
-.form h2{
-  color:#fff;
+  border-radius:20px;
   text-align:center;
+  color:white;
+  box-shadow:0 0 25px rgba(255,0,100,0.3);
+}
+
+h2{
   margin-bottom:20px;
 }
 
-.inputBox{
-  position:relative;
-  margin-bottom:20px;
-}
-
-.inputBox input{
-  width:100%;
+input{
+  display:block;
+  width:200px;
+  margin:10px auto;
   padding:10px;
   border:none;
-  outline:none;
   border-radius:10px;
-  background:#1e293b;
-  color:#fff;
 }
 
 button{
-  padding:10px;
+  padding:10px 20px;
   border:none;
   border-radius:10px;
-  background:#22c55e;
-  color:#fff;
+  background:#ff4d6d;
+  color:white;
   cursor:pointer;
-  transition:0.3s;
 }
 
 button:hover{
-  background:#16a34a;
-}
-
-.links{
-  display:flex;
-  justify-content:space-between;
-  margin-top:10px;
-}
-
-.links a{
-  color:#aaa;
-  font-size:12px;
-  text-decoration:none;
+  background:#ff1e4d;
 }
 </style>
 </head>
@@ -243,29 +54,25 @@ button:hover{
 <body>
 
 <div class="box">
-  <div class="form">
-    <h2>💖 LOGIN 💖</h2>
+  <h2>💖 เฉพาะเราสองคน 💖</h2>
 
-    <div class="inputBox">
-      <input type="text" placeholder="Username">
-    </div>
+  <input type="text" id="user" placeholder="ชื่อของเรา">
+  <input type="password" id="pass" placeholder="รหัสลับ">
 
-    <div class="inputBox">
-      <input type="password" placeholder="Password">
-    </div>
-
-    <button onclick="login()">Sign in</button>
-
-    <div class="links">
-      <a href="#">Forgot Password</a>
-      <a href="#">Sign up</a>
-    </div>
-  </div>
+  <button onclick="login()">เข้าสู่โลกความทรงจำ</button>
 </div>
 
 <script>
 function login(){
-  alert("เข้าสู่โลกความรัก 💖");
+  const user = document.getElementById("user").value;
+  const pass = document.getElementById("pass").value;
+
+  if(user === "pimchnok" && pass === "thnomthraphy"){
+    localStorage.setItem("login","true");
+    window.location.href = "memory.html";
+  }else{
+    alert("รหัสไม่ถูกนะ 😝");
+  }
 }
 </script>
 
