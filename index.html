@@ -119,3 +119,155 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login Love 💖</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: sans-serif;
+}
+
+body{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  background:#0f172a;
+}
+
+.box{
+  position:relative;
+  width:350px;
+  height:420px;
+  background:#1e293b;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.box::before{
+  content:'';
+  position:absolute;
+  top:-50%;
+  left:-50%;
+  width:350px;
+  height:420px;
+  background:linear-gradient(0deg,transparent,#ff2770,#ff2770);
+  transform-origin:bottom right;
+  animation:animate 6s linear infinite;
+}
+
+.box::after{
+  content:'';
+  position:absolute;
+  top:-50%;
+  left:-50%;
+  width:350px;
+  height:420px;
+  background:linear-gradient(0deg,transparent,#45f3ff,#45f3ff);
+  transform-origin:bottom right;
+  animation:animate 6s linear infinite;
+  animation-delay:-3s;
+}
+
+@keyframes animate{
+  0%{transform:rotate(0deg);}
+  100%{transform:rotate(360deg);}
+}
+
+.form{
+  position:absolute;
+  inset:4px;
+  background:#0f172a;
+  border-radius:16px;
+  padding:40px;
+  display:flex;
+  flex-direction:column;
+  z-index:10;
+}
+
+.form h2{
+  color:#fff;
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.inputBox{
+  position:relative;
+  margin-bottom:20px;
+}
+
+.inputBox input{
+  width:100%;
+  padding:10px;
+  border:none;
+  outline:none;
+  border-radius:10px;
+  background:#1e293b;
+  color:#fff;
+}
+
+button{
+  padding:10px;
+  border:none;
+  border-radius:10px;
+  background:#22c55e;
+  color:#fff;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+button:hover{
+  background:#16a34a;
+}
+
+.links{
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+}
+
+.links a{
+  color:#aaa;
+  font-size:12px;
+  text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <div class="form">
+    <h2>💖 LOGIN 💖</h2>
+
+    <div class="inputBox">
+      <input type="text" placeholder="Username">
+    </div>
+
+    <div class="inputBox">
+      <input type="password" placeholder="Password">
+    </div>
+
+    <button onclick="login()">Sign in</button>
+
+    <div class="links">
+      <a href="#">Forgot Password</a>
+      <a href="#">Sign up</a>
+    </div>
+  </div>
+</div>
+
+<script>
+function login(){
+  alert("เข้าสู่โลกความรัก 💖");
+}
+</script>
+
+</body>
+</html>
