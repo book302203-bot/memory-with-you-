@@ -2,6 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Memory 💖</title>
 
 <style>
@@ -13,13 +14,12 @@ body{
   text-align:center;
 }
 
-/* ☰ ปุ่ม */
+/* ☰ */
 .menu-btn{
   position:fixed;
   top:15px;
   left:15px;
   font-size:28px;
-  color:white;
   z-index:9999;
   cursor:pointer;
 }
@@ -34,7 +34,6 @@ body{
   background:#1e293b;
   padding:20px;
   transition:0.3s;
-  z-index:9998;
 }
 
 .sidebar a{
@@ -46,17 +45,20 @@ body{
 
 /* กล่อง */
 .box{
-  margin:80px auto;
-  width:320px;
+  margin:100px auto;
+  width:90%;
+  max-width:320px;
   padding:20px;
   border-radius:20px;
   background:linear-gradient(135deg,#22c1c3,#ff4d6d);
 }
 
-/* รูป */
-img{
-  width:200px;
-  border-radius:15px;
+/* canvas */
+canvas{
+  width:100%;
+  height:100px;
+  border-radius:10px;
+  touch-action:none;
 }
 
 /* หัวใจ */
@@ -69,12 +71,6 @@ img{
 @keyframes fall{
   to{transform:translateY(100vh);}
 }
-
-/* canvas */
-canvas{
-  background:#999;
-  border-radius:10px;
-}
 </style>
 </head>
 
@@ -83,67 +79,55 @@ canvas{
 <!-- ☰ -->
 <div class="menu-btn" onclick="toggleMenu()">☰</div>
 
-<!-- เมนู -->
 <div class="sidebar" id="menu">
-  <a href="#" onclick="showPage('home')">💖 วันคบรอบ</a>
-  <a href="#" onclick="showPage('photo')">📸 รูปภาพ</a>
-  <a href="#" onclick="showPage('video')">🎬 วิดีโอ</a>
-  <a href="#" onclick="showPage('secret')">💌 ข้อความลับ</a>
+  <a onclick="showPage('home')">💖 วันคบรอบ</a>
+  <a onclick="showPage('secret')">💌 ข้อความลับ</a>
 </div>
 
-<!-- หน้า 1 -->
+<!-- หน้า -->
 <div class="box" id="home">
   <h2>💖 วันคบรอบ 💖</h2>
   <p id="time"></p>
 </div>
 
-<!-- รูป -->
-<div class="box" id="photo" style="display:none">
-  <h2>📸 รูปของเรา</h2>
-  <img src="https://i.imgur.com/yourimage.jpg">
-</div>
-
-<!-- วิดีโอ -->
-<div class="box" id="video" style="display:none">
-  <h2>🎬 วิดีโอ</h2>
-  <video width="250" controls>
-    <source src="yourvideo.mp4" type="video/mp4">
-  </video>
-</div>
-
-<!-- ข้อความขูด -->
 <div class="box" id="secret" style="display:none">
   <h2>💌 ข้อความลับ</h2>
-  <p>ขูดเพื่อดู 💖</p>
-  <canvas id="scratch" width="250" height="100"></canvas>
+  <canvas id="scratch"></canvas>
 </div>
 
 <script>
-// 🔐 กันเข้าตรง
+// 🔐 กันเข้าโดยตรง
 if(localStorage.getItem("login") !== "true"){
   window.location.href = "index.html";
 }
 
-// ⏱️ เวลา (แก้วันให้ตรงเป๊ะ)
+// ⏱️ เวลา (แก้แบบไม่เพี้ยน)
 const start = new Date("2026-01-25T00:00:00+07:00");
 
 function updateTime(){
   const now = new Date();
 
-  // แยกวัน (ไม่เอาเวลา)
-  const startDay = new Date(start.getFullYear(), start.getMonth(), start.getDate());
-  const todayDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  // เอาเฉพาะ "วัน"
+  const s = new Date(start);
+  s.setHours(0,0,0,0);
 
-  let diffDay = Math.floor((todayDay - startDay)/(1000*60*60*24));
+  const n = new Date(now);
+  n.setHours(0,0,0,0);
 
-  let diff = now - start;
+  let days = Math.floor((n - s)/(1000*60*60*24));
 
-  let h = Math.floor(diff/(1000*60*60))%24;
+  // เวลาเฉพาะวันนี้
+  let todayStart = new Date(now);
+  todayStart.setHours(0,0,0,0);
+
+  let diff = now - todayStart;
+
+  let h = Math.floor(diff/(1000*60*60));
   let m = Math.floor(diff/(1000*60))%60;
-  let s = Math.floor(diff/1000)%60;
+  let s2 = Math.floor(diff/1000)%60;
 
   document.getElementById("time").innerText =
-    `${diffDay} วัน ${h} ชม ${m} นาที ${s} วิ 💕`;
+    `${days} วัน ${h} ชม ${m} นาที ${s2} วิ 💕`;
 }
 
 setInterval(updateTime,1000);
@@ -151,46 +135,57 @@ updateTime();
 
 // ☰ เมนู
 function toggleMenu(){
-  const menu = document.getElementById("menu");
-  menu.style.left = (menu.style.left === "0px") ? "-250px" : "0px";
+  const m = document.getElementById("menu");
+  m.style.left = (m.style.left === "0px") ? "-250px" : "0px";
 }
 
-// เปลี่ยนหน้า
-function showPage(page){
+function showPage(p){
   document.querySelectorAll(".box").forEach(el=>el.style.display="none");
-  document.getElementById(page).style.display="block";
+  document.getElementById(p).style.display="block";
   toggleMenu();
 }
 
-// 💗 หัวใจตก
-function heart(){
+// 💗 หัวใจ
+setInterval(()=>{
   const h = document.createElement("div");
-  h.innerText = "💗";
-  h.classList.add("heart");
-  h.style.left = Math.random()*100+"vw";
-  h.style.animationDuration = (Math.random()*3+2)+"s";
+  h.innerText="💗";
+  h.className="heart";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(Math.random()*3+2)+"s";
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),5000);
-}
-setInterval(heart,400);
+},400);
 
-// 🪙 ขูดการ์ด
+// 🪙 ขูด (มือถือ+คอม)
 const canvas = document.getElementById("scratch");
 const ctx = canvas.getContext("2d");
 
-// พื้นเทา
-ctx.fillStyle = "#999";
-ctx.fillRect(0,0,250,100);
+canvas.width = canvas.offsetWidth;
+canvas.height = 100;
 
-// ข้อความจริง
-ctx.font = "18px sans-serif";
-ctx.fillStyle = "pink";
-ctx.fillText("รักเธอที่สุด 💖",50,60);
+ctx.fillStyle="#999";
+ctx.fillRect(0,0,canvas.width,canvas.height);
 
-// ขูด
-canvas.addEventListener("mousemove",function(e){
-  if(e.buttons === 1){
-    ctx.clearRect(e.offsetX-10,e.offsetY-10,20,20);
+ctx.fillStyle="pink";
+ctx.font="18px sans-serif";
+ctx.fillText("รักเธอที่สุด 💖",canvas.width/4,60);
+
+function scratch(x,y){
+  ctx.clearRect(x-15,y-15,30,30);
+}
+
+// มือถือ
+canvas.addEventListener("touchmove",e=>{
+  e.preventDefault();
+  const rect = canvas.getBoundingClientRect();
+  const t = e.touches[0];
+  scratch(t.clientX-rect.left, t.clientY-rect.top);
+});
+
+// คอม
+canvas.addEventListener("mousemove",e=>{
+  if(e.buttons===1){
+    scratch(e.offsetX,e.offsetY);
   }
 });
 </script>
