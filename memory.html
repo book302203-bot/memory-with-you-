@@ -124,25 +124,26 @@ if(localStorage.getItem("login") !== "true"){
   window.location.href = "index.html";
 }
 
-// ⏱️ เวลา (ไทย)
+// ⏱️ เวลา (แก้วันให้ตรงเป๊ะ)
 const start = new Date("2026-01-25T00:00:00+07:00");
 
 function updateTime(){
   const now = new Date();
+
+  // แยกวัน (ไม่เอาเวลา)
+  const startDay = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+  const todayDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  let diffDay = Math.floor((todayDay - startDay)/(1000*60*60*24));
+
   let diff = now - start;
 
-  if(diff < 0){
-    document.getElementById("time").innerText = "ยังไม่ถึงวันของเรา 💖";
-    return;
-  }
-
-  let d = Math.floor(diff/(1000*60*60*24));
   let h = Math.floor(diff/(1000*60*60))%24;
   let m = Math.floor(diff/(1000*60))%60;
   let s = Math.floor(diff/1000)%60;
 
   document.getElementById("time").innerText =
-    `${d} วัน ${h} ชม ${m} นาที ${s} วิ 💕`;
+    `${diffDay} วัน ${h} ชม ${m} นาที ${s} วิ 💕`;
 }
 
 setInterval(updateTime,1000);
